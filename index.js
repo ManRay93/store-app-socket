@@ -91,8 +91,8 @@ nsp_chat.on('connection', function(socket){
 
 // update transaction
 nsp_transaction.on('connection', function(socket) {
-
     socket.on('login', function(login_msg) {
+        // console.log('socket ids-----------', nsp_transaction);
         console.log('login event');
         let login_data = JSON.parse(login_msg);
         login(socket.id, login_data);
@@ -108,8 +108,9 @@ nsp_transaction.on('connection', function(socket) {
 
     socket.on('transaction', function(data) {
         console.log('transaction event');
-        let transaction_data = JSON.parse(data);
-        // let room_name = socket.to(resolveRoomName(transaction_data)).emit('transaction', data.payload);
+        // let incoming_data = JSON.parse(data);
+        // // console.log('transaction data', transaction_data);
+        // let room_name = socket.to(resolveRoomName(incoming_data.payload)).emit('transaction', data.payload);
         // let rooms = Object.keys(socket.rooms);
         // if(!rooms.find(r => r == room_name)) {
         //     socket.join(room_name);
@@ -117,20 +118,23 @@ nsp_transaction.on('connection', function(socket) {
         //     console.log('all rooms name ', Object.keys(socket.rooms));
         // }
 
-        socket.to(getSocketId(data.to)).emit('transaction', data);
+        // console.log('socket destination', getSocketId(data.to));
+
+        // // socket.to(getSocketId(data.to)).broadcast.emit.emit('transaction', data);
 
         // socket.to(room_name).broadcast.emit('transaction', data);
+
+        socket.broadcast.emit('transaction', data);
     });
 
     socket.on('log out', function(login_msg){
         console.log('log out event');
         let login_data = JSON.parse(login_msg);
         logout(socket.id, login_data);
-        leaveAllRoom();
     });
 
     socket.on('disconnect', function(){
-        console.log('user disconnected ' + socket.id);
+        // console.log('user disconnected ' + socket.id);
     });
 }) 
 
@@ -158,8 +162,9 @@ function logout(socket_id, login_data) {
 }
 
 function getSocketId(user_name) {
-    let u = users.find(u => u.user_name == user_name);
-    if(!u) return '';
+    console.log('data user saat ini', users);
+    let u = users.find(u => u.user_name === user_name);
+    if(u == undefined) return '';
     return u.socket_id;
 }
 
