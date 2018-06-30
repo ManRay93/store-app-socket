@@ -1,0 +1,21 @@
+{
+    "name": "Store App Socket",
+    "description": "socket application for store app",
+    "website": "https://github.com/ManRay93/store-app-socket",
+    "repository": "https://github.com/ManRay93/store-app-socket",
+    "success_url": "/",
+    "keywords": [
+      "node",
+      "express",
+      "socket.io",
+      "realtime",
+      "websocket"
+    ],
+    "scripts": {
+    },
+    "addons": [
+    ],
+    "env": {
+      "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  }
